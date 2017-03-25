@@ -1,0 +1,19 @@
+{
+  "name": "pebble-api",
+  "version": "0.0.1",
+  "description": "3rd Party API for Pebble",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Michael Humphris (michahump@gmail.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "restify": "^4.3.0",
+    "restify-router": "^0.4.2"
+  }
+}
