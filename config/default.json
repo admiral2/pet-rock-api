@@ -1,0 +1,15 @@
+{
+  "Endpoints": {
+    "bootApiBase": "http://localhost:8080/api/config",
+    "Authentication": {
+      "sign_in": "http://localhost:8080/auth/realms/demo/protocol/openid-connect/auth",
+      "token": "http://localhost:8080/auth/realms/demo/protocol/openid-connect/token"
+    }
+  },
+  "database": {
+    "name": "postgres",
+    "username": "admin",
+    "password": "test1234",
+    "options": []
+  }
+}
