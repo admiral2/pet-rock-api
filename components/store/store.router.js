@@ -1,3 +1,4 @@
+var restify = require('restify');
 var Router = require('restify-router').Router;
 var routerInstance = new Router();
 

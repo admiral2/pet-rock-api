@@ -1,31 +1,32 @@
+'use strict';
+
+var fs        = require('fs');
+var path      = require('path');
 var Sequelize = require('sequelize');
-var config    = require('config').database;  // we use node-config to handle environments
+var basename  = path.basename(module.filename);
+var env       = process.env.NODE_ENV || 'development';
+var config    = require('config');
+var db        = {};
 
-// initialize database connection
-var sequelize = new Sequelize(
-  config.name,
-  config.username,
-  config.password,
-  config.options
-);
+var sequelize = new Sequelize(config.database.database, config.database.username, config.database.password, config.database);
 
-// load models
-var models = [
-  'App',
-  'Task',
-  'User'
-];
-models.forEach(function(model) {
-  module.exports[model] = sequelize.import(__dirname + '/' + model);
+fs
+  .readdirSync(__dirname)
+  .filter(function(file) {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(function(file) {
+    var model = sequelize['import'](path.join(__dirname, file));
+    db[model.name] = model;
+  });
+
+Object.keys(db).forEach(function(modelName) {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
 });
 
-// describe relationships
-(function(m) {
-  m.PhoneNumber.belongsTo(m.User);
-  m.Task.belongsTo(m.User);
-  m.User.hasMany(m.Task);
-  m.User.hasMany(m.PhoneNumber);
-})(module.exports);
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
-// export connection
-module.exports.sequelize = sequelize;
+module.exports = db;

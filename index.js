@@ -1,5 +1,7 @@
 var restify = require('restify');
 
+var db = require('./models');
+
 var configurationRouter = require('./components/configuration/configuration.router');
 var storeRouter = require('./components/store/store.router');
 

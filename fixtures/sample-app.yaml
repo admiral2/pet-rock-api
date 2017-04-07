@@ -1,0 +1,48 @@
+fixtures:
+- model: App
+  data:
+    id: dca9c88d-00d7-4a15-b4ac-7bdee43b4b62
+    title: Test App 1 bla bla
+    description: Some Test App 1
+    hearts: 103
+    screenshotHardware: basalt
+    iosCompanion: http://itunes.com/app1
+- model: Image
+  data:
+    id: 3ee2e844-66b3-4381-81eb-212187cb471e
+    dimentions: 64x64
+    url: http://localhost/icon_1.png
+    appListImageId: dca9c88d-00d7-4a15-b4ac-7bdee43b4b62
+- model: Image
+  data:
+    id: 704e6b36-fa4c-4617-876f-7a20cfd90a11
+    dimentions: 114x114
+    url: http://localhost/screenshot_1.png
+    appScreenshotId: dca9c88d-00d7-4a15-b4ac-7bdee43b4b62
+- model: Image
+  data:
+    id: 704e6b36-fa4c-4617-876f-7a20cfd90a82
+    dimentions: 114x114
+    url: http://localhost/screenshot_2.png
+    appScreenshotId: dca9c88d-00d7-4a15-b4ac-7bdee43b4b62
+
+- model: App
+  data:
+    id: 2967429b-3e35-4ab5-ae44-8586c036f200
+    title: Test App
+    description: Some Test App
+    hearts: 5
+    screenshotHardware: basalt
+- model: Image
+  data:
+    id: 3ee2e844-66b3-4381-81eb-212187cb471f
+    dimentions: 1x1
+    url: http://localhost/1x1.png
+    appListImageId: 2967429b-3e35-4ab5-ae44-8586c036f200
+- model: Image
+  data:
+    id: 704e6b36-fa4c-4617-876f-7a20cfd90a80
+    dimentions: 2x2
+    url: http://localhost/2x2.png
+    appScreenshotId: 2967429b-3e35-4ab5-ae44-8586c036f200
+

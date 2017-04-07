@@ -10,7 +10,8 @@
   "author": "Michael Humphris (michahump@gmail.com)",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "sequelize-fixtures": "^0.5.6"
   },
   "dependencies": {
     "bluebird": "^3.5.0",

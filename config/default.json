@@ -7,9 +7,10 @@
     }
   },
   "database": {
-    "name": "postgres",
-    "username": "admin",
+    "username": "postgres",
     "password": "test1234",
-    "options": []
+    "database": "pet_rock",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   }
 }
