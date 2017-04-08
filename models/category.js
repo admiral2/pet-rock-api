@@ -8,7 +8,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     name: DataTypes.STRING,
     slug: DataTypes.STRING,
-    color: DataTypes.STRING
+    color: {
+      type: DataTypes.STRING,
+      defaultValue: '#ffffff'
+    }
   }, {
     classMethods: {
       associate: function(models) {

@@ -1,4 +1,10 @@
 fixtures:
+- model: Category
+  data:
+    id: 2f38c53c-1e9e-4a7a-8250-ca696161909c
+    name: Test Category
+    slug: test-category
+    color: '#ffffff'
 - model: App
   data:
     id: dca9c88d-00d7-4a15-b4ac-7bdee43b4b62
@@ -7,6 +13,7 @@ fixtures:
     hearts: 103
     screenshotHardware: basalt
     iosCompanion: http://itunes.com/app1
+    categoryId: 2f38c53c-1e9e-4a7a-8250-ca696161909c
 - model: Image
   data:
     id: 3ee2e844-66b3-4381-81eb-212187cb471e
@@ -33,6 +40,7 @@ fixtures:
     description: Some Test App
     hearts: 5
     screenshotHardware: basalt
+    categoryId: 2f38c53c-1e9e-4a7a-8250-ca696161909c
 - model: Image
   data:
     id: 3ee2e844-66b3-4381-81eb-212187cb471f

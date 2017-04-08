@@ -24,15 +24,22 @@ exports.index = function() {
 
 // Does not support app capabilities
 exports.faces = function(image_ratio, platform, hardware, firmware_version) {
-  let categoryPromise = Category.all();
+  let categoryPromise = Category.all().map(function(item) {
+    var category = {};
+    category.id = item.id;
+    category.name = item.name;
+    category.slug = item.slug;
+    category.color = item.color;
+    category.links = {};
+    category.links[apps] = "http://locahost/"
+  });
+
   let appPromise = App.all({
     include: [
       {model: Image, as: 'listImages'},
       {model: Image, as: 'screenshots'}
     ],
   }).map(function(item) {
-    console.log(item.title);
-
     var app = {};
     app.id = item.id;
     app.title = item.title;

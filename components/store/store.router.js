@@ -14,6 +14,21 @@ routerInstance.get('/', function(req, res, next) {
   });
 });
 
+routerInstance.get('/applications/:id/changelog', function(req, res, next) {
+
+});
+
+routerInstance.get('/apps/category/:id', function(req, res, next) {
+
+});
+routerInstance.get('/apps/id/:id', function(req, res, next) {
+
+});
+routerInstance.get('/apps/dev/:id', function(req, res, next) {
+
+});
+
+
 routerInstance.get('/home/faces', function(req, res, next) {
   //image_ratio=1&platform=all&hardware=basalt&firmware_version=3&filter_hardware=true
   let image_ratio = req.params['image_radio'];
