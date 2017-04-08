@@ -1,6 +1,7 @@
 var restify = require('restify');
 var Router = require('restify-router').Router;
 var routerInstance = new Router();
+var Errors = require('../../util/errors');
 
 var controller = require('./store.controller');
 
@@ -14,18 +15,31 @@ routerInstance.get('/', function(req, res, next) {
   });
 });
 
+// Returns a changelog (as an array) for the given app
 routerInstance.get('/applications/:id/changelog', function(req, res, next) {
-
+  next(new restify.NotFoundError());  
 });
 
+// Returns details about the given category
 routerInstance.get('/apps/category/:id', function(req, res, next) {
-
+  next(new restify.NotFoundError());
 });
+
+// Returns a single app
 routerInstance.get('/apps/id/:id', function(req, res, next) {
-
+  let appId = req.params['id'];
+  controller.getAppById(appId)
+    .then(function(result) {
+      res.json(result)
+      next();
+    }).catch(function(err) {
+      next(new restify.InternalServerError(err));
+    })
 });
-routerInstance.get('/apps/dev/:id', function(req, res, next) {
 
+// Returns all apps by the given developer id
+routerInstance.get('/apps/dev/:id', function(req, res, next) {
+  next(new restify.NotFoundError());
 });
 
 

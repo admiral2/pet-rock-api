@@ -1,20 +1,14 @@
 var Promise = require('bluebird');
 var config = require('config');
+
+var Errors = require('../../util/errors');
+
 var App = require('../../models').App;
 var Image = require('../../models').Image;
 var Category = require('../../models').Category;
+var AppMapper = require('../../util/mapper/app_mapper');
+var CategoryMapper = require('../../util/mapper/category_mapper');
 
-function mapImageMeta(imageMeta) {
-  var img = {}
-  img[imageMeta.dimentions] = imageMeta.url;
-  return img;
-}
-
-function reduceMapArray(result, item) {
-  var key = Object.keys(item)[0];
-  result[key] = item[key];
-  return result;
-}
 
 exports.index = function() {
   return new Promise(function (resolve, reject) {
@@ -22,42 +16,35 @@ exports.index = function() {
   });
 };
 
-// Does not support app capabilities
+
+exports.getAppById = function(id) {
+  let appPromise = App.findById(id, {
+      include: [
+        {model: Image, as: 'listImages'},
+        {model: Image, as: 'screenshots'}
+      ],
+    }).then(function(app) {
+      if (app == null) {
+        throw new Errors.NotFoundError();
+      }
+      return app;
+    }).then(AppMapper.toDetailView);
+
+    return appPromise;
+}
+
+// Does not yet support app capabilities
 exports.faces = function(image_ratio, platform, hardware, firmware_version) {
-  let categoryPromise = Category.all().map(function(item) {
-    var category = {};
-    category.id = item.id;
-    category.name = item.name;
-    category.slug = item.slug;
-    category.color = item.color;
-    category.links = {};
-    category.links[apps] = "http://locahost/"
-  });
+  let categoryPromise = Category.all()
+    .map(CategoryMapper.toHomeView);
 
   let appPromise = App.all({
     include: [
       {model: Image, as: 'listImages'},
       {model: Image, as: 'screenshots'}
     ],
-  }).map(function(item) {
-    var app = {};
-    app.id = item.id;
-    app.title = item.title;
-    app.description = item.description;
-    app.category_id = item.categoryId;
-    app.hearts = item.hearts;
-    app.screenshot_hardware = item.screenshotHardware;
-
-    app.companions = {
-      ios: item.iosCompanion,
-      android: item.androidCompanion
-    };
-
-    app.list_image = item.listImages.map(mapImageMeta).reduce(reduceMapArray);
-    app.screenshot_images = item.screenshots.map(mapImageMeta);
-
-    return app;
-  });
+  })
+  .map(AppMapper.toHomeView);
 
   return Promise.join(categoryPromise, appPromise)
     .then(function(response) {
