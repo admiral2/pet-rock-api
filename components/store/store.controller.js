@@ -26,6 +26,9 @@ exports.getAppById = function(id) {
         {model: Image, as: 'screenshots'},
         {model: Developer, where: {
           id: {$col: 'App.developerId'}
+        }},
+        {model: Category, where: {
+          id: {$col: 'App.categoryId'}
         }}
       ],
     }).then(function(app) {

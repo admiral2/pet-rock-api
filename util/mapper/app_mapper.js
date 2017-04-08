@@ -21,7 +21,11 @@ exports.toDetailView = function(item) {
   app.id = item.id;
   app.title = item.title;
   app.description = item.description;
+  
   app.category_id = item.categoryId;
+  app.category_name = item.Category.name
+  app.category_color = item.Category.color;
+
   app.hearts = item.hearts;
   app.screenshot_hardware = item.screenshotHardware;
 
