@@ -34,8 +34,8 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
         App.belongsTo(models.Category, {foreignKey: 'categoryId'});
+        App.belongsTo(models.Developer, {foreignKey: 'developerId'});
         App.hasMany(models.Image, {
           foreignKey: 'appListImageId',
           as: 'listImages'

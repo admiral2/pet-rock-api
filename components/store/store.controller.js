@@ -6,6 +6,8 @@ var Errors = require('../../util/errors');
 var App = require('../../models').App;
 var Image = require('../../models').Image;
 var Category = require('../../models').Category;
+var Developer = require('../../models').Developer;
+
 var AppMapper = require('../../util/mapper/app_mapper');
 var CategoryMapper = require('../../util/mapper/category_mapper');
 
@@ -21,7 +23,10 @@ exports.getAppById = function(id) {
   let appPromise = App.findById(id, {
       include: [
         {model: Image, as: 'listImages'},
-        {model: Image, as: 'screenshots'}
+        {model: Image, as: 'screenshots'},
+        {model: Developer, where: {
+          id: {$col: 'App.developerId'}
+        }}
       ],
     }).then(function(app) {
       if (app == null) {

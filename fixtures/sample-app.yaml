@@ -1,4 +1,8 @@
 fixtures:
+- model: Developer
+  data:
+    id: 2f38c53c-1e9e-4a7a-8250-ca696161919c
+    name: Test Developer
 - model: Category
   data:
     id: 2f38c53c-1e9e-4a7a-8250-ca696161909c
@@ -8,6 +12,7 @@ fixtures:
 - model: App
   data:
     id: dca9c88d-00d7-4a15-b4ac-7bdee43b4b62
+    developerId: 2f38c53c-1e9e-4a7a-8250-ca696161919c
     title: Test App 1 bla bla
     description: Some Test App 1
     hearts: 103

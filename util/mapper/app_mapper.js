@@ -36,6 +36,12 @@ exports.toDetailView = function(item) {
   app.source = item.source;
   app.website = item.website;
 
+  app.created_at = item.createdAt;
+
+  app.developer_id = item.developerId;
+  app.author = item.Developer.name;
+
+
   return app;
 }
 
