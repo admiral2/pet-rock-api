@@ -20,7 +20,7 @@ exports.index = function() {
 
 
 exports.getAppById = function(id) {
-  let appPromise = App.findById(id, {
+  return App.findById(id, {
       include: [
         {model: Image, as: 'listImages'},
         {model: Image, as: 'screenshots'},
@@ -37,8 +37,19 @@ exports.getAppById = function(id) {
       }
       return app;
     }).then(AppMapper.toDetailView);
+}
 
-    return appPromise;
+exports.getAppsByDeveloper = function(developerId) {
+  return Developer.findById(developerId, {
+      include: [
+        {model: App, as: 'apps'}
+      ],
+    }).then(function(developer) {
+      if (developer == null) {
+        throw new Errors.NotFoundError();
+      }
+      return developer.apps;
+    }).map(AppMapper.toSimpleView);
 }
 
 // Does not yet support app capabilities

@@ -45,7 +45,18 @@ exports.toDetailView = function(item) {
   app.developer_id = item.developerId;
   app.author = item.Developer.name;
 
+  return app;
+}
 
+exports.toSimpleView = function(item) {
+  var app = {};
+  app.id = item.id;
+  app.title = item.title;
+  app.description = item.description;
+
+  app.hearts = item.hearts;
+
+  app.developer_id = item.developerId;
   return app;
 }
 

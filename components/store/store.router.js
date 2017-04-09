@@ -33,13 +33,23 @@ routerInstance.get('/apps/id/:id', function(req, res, next) {
       res.json(result)
       next();
     }).catch(function(err) {
+      if (err.httpCode == 404) {
+        return next(new restify.NotFoundError(err.message));
+      }
       next(new restify.InternalServerError(err));
     })
 });
 
 // Returns all apps by the given developer id
 routerInstance.get('/apps/dev/:id', function(req, res, next) {
-  next(new restify.NotFoundError());
+  let developerId = req.params['id'];
+  controller.getAppsByDeveloper(developerId)
+    .then(function(result) {
+      res.json(result)
+      next();
+    }).catch(function(err) {
+      next(new restify.InternalServerError(err));
+    })
 });
 
 
