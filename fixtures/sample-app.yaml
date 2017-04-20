@@ -37,6 +37,15 @@ fixtures:
     dimentions: 114x114
     url: http://localhost/screenshot_2.png
     appScreenshotId: dca9c88d-00d7-4a15-b4ac-7bdee43b4b62
+- model: Release
+  data:
+    id: 704e6b36-fa4c-4617-876f-7a20ced90a82
+    appId: dca9c88d-00d7-4a15-b4ac-7bdee43b4b62
+    version: '1.0'
+    publishDate: 1491721128160
+    releaseNotes: 'Initial Release'
+    url: 'https://www.filepicker.io/api/file/9k7VFdwVRI6r99NXStom'
+    sha256: '5e718d0746c7cb34809cb456e66009286d588c01a70822e63e1eb409af633284'
 
 - model: App
   data:

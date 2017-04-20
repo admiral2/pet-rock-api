@@ -5,7 +5,9 @@ const models = require('./models');
 let modelList = [
   models.App,
   models.Category,
-  models.Image
+  models.Image,
+  models.Developer,
+  models.Release
 ]
 
 Promise.each(modelList, function(model) {

@@ -44,6 +44,10 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey: 'appScreenshotId',
           as: 'screenshots'
         });
+        App.hasMany(models.Release, {
+          foreignKey: 'appId',
+          as: 'releases'
+        });
       }
     }
   });

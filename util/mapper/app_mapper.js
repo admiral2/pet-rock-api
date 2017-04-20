@@ -4,6 +4,8 @@ var App = require('../../models').App;
 var Image = require('../../models').Image;
 var Category = require('../../models').Category;
 
+var ReleaseMapper = require('./release_mapper');
+
 function mapImageMeta(imageMeta) {
   var img = {}
   img[imageMeta.dimentions] = imageMeta.url;
@@ -44,6 +46,10 @@ exports.toDetailView = function(item) {
 
   app.developer_id = item.developerId;
   app.author = item.Developer.name;
+
+  if (item.releases) {
+    app.release = ReleaseMapper.toLatestRelease(item.releases[0]);
+  }
 
   return app;
 }

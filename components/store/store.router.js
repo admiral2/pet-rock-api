@@ -6,6 +6,7 @@ var Errors = require('../../util/errors');
 var controller = require('./store.controller');
 
 routerInstance.get('/', function(req, res, next) {
+  console.log(req);
   controller.index()
   .then(function(result) {
     res.end(result);
