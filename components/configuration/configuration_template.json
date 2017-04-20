@@ -36,7 +36,7 @@
       },
       "webviews":{
          "loading/buy_a_pebble":"https://getpebble.com?utm_campaign=PebbleApp&utm_medium=referral&utm_source=ios-start-screen",
-         "authentication/sign_in":"http://192.168.0.106:8090/auth",
+         "authentication/sign_in":"https://auth-client.getpebble.com/en_US/signup?platform=ios&release_id=207&ap_version=v.4.3.0&mid=$$phone_id$$&pid=$$pebble_id$$&platform=ios&redirect_uri=pebble%3A%2F%2Flogin",
          "authentication/sign_up":"https://auth-client.getpebble.com/en_US/signup?platform=ios&release_id=207&ap_version=v.4.3.0&mid=$$phone_id$$&pid=$$pebble_id$$&platform=ios&redirect_uri=pebble%3A%2F%2Flogin",
          "onboarding/get_some_apps":"https://apps.getpebble.com/en_US/onboarding/getsomeapps?platform=ios&release_id=207&app_version=v.4.3.0&pebble_color=$$pebble_color$$&hardware=$$hardware$$&jsv=28&uid=$$user_id$$&mid=$$phone_id$$&pid=$$pebble_id$$&$$extras$$",
          "onboarding/migrate":"https://apps.getpebble.com/en_US/onboarding/migrate?platform=ios&release_id=207&app_version=v.4.3.0&pebble_color=$$pebble_color$$&hardware=$$hardware$$&jsv=28&uid=$$user_id$$&mid=$$phone_id$$&pid=$$pebble_id$$&$$extras$$",

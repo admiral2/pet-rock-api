@@ -11,6 +11,8 @@ var Developer = require('../../models').Developer;
 
 var AppMapper = require('../../util/mapper/app_mapper');
 var CategoryMapper = require('../../util/mapper/category_mapper');
+var DeveloperMapper = require('../../util/mapper/developer_mapper');
+
 
 
 exports.index = function() {
@@ -19,6 +21,17 @@ exports.index = function() {
   });
 };
 
+exports.getApps = function() {
+  let appPromise = App.all({
+    include: [
+      {model: Image, as: 'listImages'},
+      {model: Image, as: 'screenshots'}
+    ],
+  })
+  .map(AppMapper.toHomeView);
+
+  return appPromise;
+}
 
 exports.getAppById = function(id) {
   return App.findById(id, {
@@ -50,8 +63,8 @@ exports.getAppsByDeveloper = function(developerId) {
       if (developer == null) {
         throw new Errors.NotFoundError();
       }
-      return developer.apps;
-    }).map(AppMapper.toSimpleView);
+      return developer;
+    }).then(DeveloperMapper.toDeveloperOverview);
 }
 
 // Does not yet support app capabilities

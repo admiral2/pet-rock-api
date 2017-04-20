@@ -16,18 +16,29 @@ routerInstance.get('/', function(req, res, next) {
   });
 });
 
-// Returns a changelog (as an array) for the given app
-routerInstance.get('/applications/:id/changelog', function(req, res, next) {
-  next(new restify.NotFoundError());  
-});
+// // Returns a changelog (as an array) for the given app
+// routerInstance.get('/apps/:id/changelog', function(req, res, next) {
+//   next(new restify.NotFoundError());  
+// });
 
 // Returns details about the given category
-routerInstance.get('/apps/category/:id', function(req, res, next) {
+routerInstance.get('/category/:id', function(req, res, next) {
   next(new restify.NotFoundError());
 });
 
+// Returns all apps
+routerInstance.get('/apps', function(req, res, next) {
+  controller.getApps()
+    .then(function(result) {
+      res.json(result)
+      next();
+    }).catch(function(err) {
+      next(new restify.InternalServerError(err));
+    })
+});
+
 // Returns a single app
-routerInstance.get('/apps/id/:id', function(req, res, next) {
+routerInstance.get('/apps/:id', function(req, res, next) {
   let appId = req.params['id'];
   controller.getAppById(appId)
     .then(function(result) {
@@ -42,7 +53,7 @@ routerInstance.get('/apps/id/:id', function(req, res, next) {
 });
 
 // Returns all apps by the given developer id
-routerInstance.get('/apps/dev/:id', function(req, res, next) {
+routerInstance.get('/developer/:id', function(req, res, next) {
   let developerId = req.params['id'];
   controller.getAppsByDeveloper(developerId)
     .then(function(result) {
