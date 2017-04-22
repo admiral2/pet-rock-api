@@ -1,6 +1,9 @@
 var restify = require('restify');
+var bodyParser = require('body-parser');
 
-var db = require('./models');
+var auth = require('./components/auth');
+
+// var db = require('./models');
 
 var configurationRouter = require('./components/configuration/configuration.router');
 var storeRouter = require('./components/store/store.router');
@@ -26,6 +29,10 @@ server.use(function (req, res, next) {
     next();
 });
 
+server.use(auth.initialize());
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
+server.use(restify.queryParser());
 
 configurationRouter.applyRoutes(server, '/api/config');
 storeRouter.applyRoutes(server, '/');
@@ -33,3 +40,9 @@ storeRouter.applyRoutes(server, '/');
 server.listen(8090, function() {
   console.log('%s listening at %s', server.name, server.url);
 });
+
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login', next)
+}
