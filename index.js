@@ -6,6 +6,7 @@ var auth = require('./components/auth');
 // var db = require('./models');
 
 var configurationRouter = require('./components/configuration/configuration.router');
+var authRouter = require('./components/auth/auth.router');
 var storeRouter = require('./components/store/store.router');
 
 var server = restify.createServer();
@@ -34,6 +35,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 server.use(restify.queryParser());
 
+authRouter.applyRoutes(server, '/auth');
 configurationRouter.applyRoutes(server, '/api/config');
 storeRouter.applyRoutes(server, '/');
 
