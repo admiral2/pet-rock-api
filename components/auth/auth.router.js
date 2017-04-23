@@ -15,10 +15,16 @@ routerInstance.get('/login', function(req, res, next) {
 });
 
 routerInstance.post('/login', 
-auth.protectRoute,
-function(req, res, next) {
-  res.end("Login Allowed");
-  next();
-})
+  function(req, res, next) {
+    return passport.authenticate('local', function(err, user, info) {
+      if (err) { res.json( { error: err }); return next(); }
+      if (!user) { res.json( { error: 'Unauthorised' }); return next(); }
+      req.logIn(user, function(err) {
+        if (err) { res.json( { error: err }); return next(); }
+        next();
+      })
+    })(req, res, next);
+  },
+  auth.issueJwt)
 
 module.exports = routerInstance;
