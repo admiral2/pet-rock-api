@@ -1,3 +1,4 @@
+var restify = require('restify');
 var Router = require('restify-router').Router;
 var routerInstance = new Router();
 var passport = require('passport');
@@ -16,11 +17,11 @@ routerInstance.get('/login', function(req, res, next) {
 
 routerInstance.post('/login', 
   function(req, res, next) {
-    return passport.authenticate('local', function(err, user, info) {
-      if (err) { res.json( { error: err }); return next(); }
-      if (!user) { res.json( { error: 'Unauthorised' }); return next(); }
+    return passport.authenticate('json', function(err, user, info) {
+      if (err) { return next(new restify.InternalServerError(err)) }
+      if (!user) { return next(new restify.InvalidCredentialsError("Credentials Not Found")) }
       req.logIn(user, function(err) {
-        if (err) { res.json( { error: err }); return next(); }
+        if (err) { return next(new restify.InternalServerError(err)) }
         next();
       })
     })(req, res, next);

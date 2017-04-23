@@ -30,10 +30,16 @@ server.use(function (req, res, next) {
     next();
 });
 
-server.use(auth.initialize());
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
+server.pre(restify.CORS());
+server.use(restify.fullResponse());
+
+server.pre(restify.CORS());
+// server.use(restify.fullResponse());
 server.use(restify.queryParser());
+server.use(restify.bodyParser());
+// server.use(bodyParser.urlencoded({ extended: true }));
+// server.use(bodyParser.json());
+server.use(auth.initialize());
 
 authRouter.applyRoutes(server, '/auth');
 configurationRouter.applyRoutes(server, '/api/config');

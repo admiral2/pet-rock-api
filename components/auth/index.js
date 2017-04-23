@@ -1,7 +1,7 @@
 var config = require('config');
 
 var passport = require('passport');
-var LocalStrategy = require('passport-local');
+var LocalStrategy = require('passport-json');
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 
@@ -13,9 +13,8 @@ var User = require('../../models').User;
 module.exports = {
   initialize: function() {
     passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'password',
-        session: false
+        usernameProp: 'email',
+        passwordProp: 'password'
       },
       function(username, password, done) {
         User.findOne({ email: username }).then(function(user) {
@@ -76,8 +75,7 @@ module.exports = {
     console.log(jwt);
 
     var tokens = {
-      auth_token: jwt.compact(),
-      refresh_token: 'refresh_token'
+      auth_token: jwt.compact()
     }
     res.json(tokens);
     return next();
