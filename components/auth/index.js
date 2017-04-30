@@ -1,5 +1,8 @@
 var config = require('config');
 
+var restify = require('restify');
+
+
 var passport = require('passport');
 var LocalStrategy = require('passport-json');
 var JwtStrategy = require('passport-jwt').Strategy;
@@ -52,10 +55,10 @@ module.exports = {
 
   protectRoute: function(req, res, next) {
     return passport.authenticate('jwt', function(err, user, info) {
-      if (err) { res.json( { error: err }); return next(); }
-      if (!user) { res.json( { error: 'Unauthorised' }); return next(); }
+      if (err) { return next(new restify.InternalError(err)); }
+      if (!user) { return next(new restify.UnauthorizedError()); }
       req.logIn(user, function(err) {
-        if (err) { res.json( { error: err }); return next(); }
+        if (err) { return next(new restify.InternalError(err)); }
         next();
       })
     })(req, res, next);
