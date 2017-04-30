@@ -27,7 +27,13 @@ module.exports = {
       },
       appId: {
         allowNull: false,
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        references: {
+          model: 'Apps',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'restrict'
       }
     });
   },

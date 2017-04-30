@@ -51,6 +51,7 @@ fixtures:
   data:
     id: 2967429b-3e35-4ab5-ae44-8586c036f200
     title: Test App
+    developerId: 2f38c53c-1e9e-4a7a-8250-ca696161919c
     description: Some Test App
     hearts: 5
     screenshotHardware: basalt

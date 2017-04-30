@@ -11,19 +11,11 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
-      id: {
-        type: Sequelize.UUID
-      },
       hearts: {
         type: Sequelize.INTEGER
       },
       description: {
         type: Sequelize.STRING
-      },
-      categoryId: {
-        type: Sequelize.UUID,
-        onDelete: 'CASCADE',
-        onUpdate: 'SET NULL'
       },
       createdAt: {
         allowNull: false,
