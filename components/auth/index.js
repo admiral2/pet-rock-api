@@ -9,7 +9,6 @@ var JwtNode = require('jwt-node');
 
 var User = require('../../models').User;
 
-
 module.exports = {
   initialize: function() {
     passport.use(new LocalStrategy({
@@ -66,6 +65,7 @@ module.exports = {
     var signingKey = 'secret'; // TODO: make this an actual secret
     var claims = {
       iss: 'petrock.auth',
+      aud: 'petrock.com',
       sub: req.user.id,
       scope: 'public'
     }
