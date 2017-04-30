@@ -4,12 +4,12 @@ module.exports = {
   up: function (queryInterface, Sequelize) {
     queryInterface.addColumn(
       'Apps',
-      'developerId', {
+      'categoryId', {
         type: Sequelize.UUID,
         allowNull: false,
-        field: 'developerId',
+        field: 'categoryId',
         references: {
-          model: 'Developers',
+          model: 'Categories',
           key: 'id'
         },
         onUpdate: 'cascade',
@@ -20,6 +20,6 @@ module.exports = {
   down: function (queryInterface, Sequelize) {
     queryInterface.removeColumn(
       'Apps',
-      'developerId');
+      'categoryId');
   }
 };

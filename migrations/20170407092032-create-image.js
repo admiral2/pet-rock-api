@@ -19,12 +19,20 @@ module.exports = {
       appListImageId: {
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
-        onUpdate: 'SET NULL'
+        onUpdate: 'SET NULL',
+        references: {
+          model: 'Apps',
+          key: 'id'
+        },
       },
       appScreenshotId: {
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
-        onUpdate: 'SET NULL'
+        onUpdate: 'SET NULL',
+        references: {
+          model: 'Apps',
+          key: 'id'
+        },
       },
       createdAt: {
         allowNull: false,
