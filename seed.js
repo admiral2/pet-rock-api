@@ -7,17 +7,18 @@ let modelList = [
   models.Category,
   models.Image,
   models.Developer,
-  models.Release
+  models.Release,
+  models.User
 ]
 
 Promise.each(modelList, function(model) {
   return model.destroy({where: {}});
-}).then(function() {
-  //can use glob syntax to select multiple files
-  sequelize_fixtures.loadFile('fixtures/*.yaml', models).then(function(){
-    console.log("Done");
-  });
-}).catch(function(err) {
+})
+.then(sequelize_fixtures.loadFile('fixtures/*.yaml', models))
+.then(function(){
+  console.log("Done");
+})
+.catch(function(err) {
   console.log(err);
 })
 

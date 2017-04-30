@@ -1,0 +1,8 @@
+fixtures:
+- model: User
+  data:
+    id: 906e9f33-ca8a-425a-9502-af8733612c0f
+    email: test@test.com
+    password: test1234
+    display_name: TestUser
+    password_hash: test1234

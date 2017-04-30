@@ -1,32 +1,27 @@
 var restify = require('restify');
+var bodyParser = require('body-parser');
 
-var db = require('./models');
+var auth = require('./components/auth');
 
 var configurationRouter = require('./components/configuration/configuration.router');
+var authRouter = require('./components/auth/auth.router');
+var userRouter = require('./components/user/user.router');
 var storeRouter = require('./components/store/store.router');
 
 var server = restify.createServer();
 
-server.use(function (req, res, next) {
+restify.CORS.ALLOW_HEADERS.push("authorization");
+restify.CORS.ALLOW_HEADERS.push("content-type");
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+server.use(restify.CORS());
+server.use(restify.fullResponse());
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+server.use(restify.queryParser());
+server.use(restify.bodyParser());
+server.use(auth.initialize());
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
-
-
+authRouter.applyRoutes(server, '/auth');
+userRouter.applyRoutes(server, '/user');
 configurationRouter.applyRoutes(server, '/api/config');
 storeRouter.applyRoutes(server, '/');
 
