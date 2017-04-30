@@ -35,7 +35,11 @@ module.exports = {
         audience: 'petrock.com'
       },
       function(jwt, done) {
-        User.findById(jwt.sub).then(function(user) {
+        User.findById(jwt.sub, {
+          attributes: {
+            exclude: ['password_hash']
+          }
+        }).then(function(user) {
           if (!user) { return done(null, false) }
           return done(null, user);
         })
