@@ -38,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        User.belongsToMany(models.App, {through: 'UserApp'})
       }
     },
     instanceMethods: {
@@ -75,7 +75,8 @@ module.exports = function(sequelize, DataTypes) {
     } else {
       return callback(null, options);
     }
-  })
+  });
+
 
   return User;
 };

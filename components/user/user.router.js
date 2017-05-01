@@ -12,5 +12,47 @@ routerInstance.get('/', Auth.protectRoute, function(req, res, next) {
   next();
 });
 
+routerInstance.get('/apps', Auth.protectRoute, function(req, res, next) {
+  controller.getApps(req.user)
+    .then(function(response) {
+      res.json(response);
+      next();
+    })
+    .catch(function(err) {
+      if (err.httpCode == 404) {
+        return next(new restify.NotFoundError(err.message));
+      }
+      next(new restify.InternalServerError(err));
+    })
+})
+
+routerInstance.post('/apps', Auth.protectRoute, function(req, res, next) {
+  controller.addApp(req.user, req.params['id'])
+    .then(function(apps) {
+      res.status(201)
+      res.json(apps);
+      next();
+    })
+    .catch(function(err) {
+      if (err.httpCode == 404) {
+        return next(new restify.NotFoundError(err.message));
+      }
+      next(new restify.InternalServerError(err));
+    })
+})
+
+routerInstance.del('/apps/:id', Auth.protectRoute, function(req, res, next) {
+  controller.removeApp(req.user, req.params['id'])
+  .then(function(apps) {
+    res.send(204);
+    next();
+  })
+  .catch(function(err) {
+    if (err.httpCode == 404) {
+        return next(new restify.NotFoundError(err.message));
+      }
+      next(new restify.InternalServerError(err));
+  })
+})
 
 module.exports = routerInstance;
