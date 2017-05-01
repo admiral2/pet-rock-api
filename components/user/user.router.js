@@ -14,8 +14,8 @@ routerInstance.get('/', Auth.protectRoute, function(req, res, next) {
 
 routerInstance.get('/apps', Auth.protectRoute, function(req, res, next) {
   controller.getApps(req.user)
-    .then(function(res) {
-      res.json(res);
+    .then(function(response) {
+      res.json(response);
       next();
     })
     .catch(function(err) {
