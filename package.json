@@ -1,14 +1,14 @@
 {
-  "name": "pebble-api",
+  "name": "pet-rock-api",
   "version": "0.0.1",
   "description": "3rd Party API for Pebble",
+  "author": "Michael Humphris (michahump@gmail.com)",  
+  "license": "AGPL-1.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
-  "author": "Michael Humphris (michahump@gmail.com)",
-  "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.11.0",
     "sequelize-fixtures": "^0.5.6"
