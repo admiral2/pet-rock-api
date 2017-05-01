@@ -48,6 +48,7 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey: 'appId',
           as: 'releases'
         });
+        App.belongsToMany(models.User, {through: 'UserApp'})
       }
     }
   });
