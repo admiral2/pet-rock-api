@@ -14,16 +14,20 @@ var AppMapper = require('../../util/mapper/app_mapper');
 var CategoryMapper = require('../../util/mapper/category_mapper');
 var DeveloperMapper = require('../../util/mapper/developer_mapper');
 
-var controller = {
-  getApps: function(user) {
+exports.getApps = function(user) {
     return user.getApps().map(AppMapper.toSimpleView);
-  },
-  addApp: function(user, appId) {
-    return user.addApp(appId)
+}
+
+exports.addApp = function(user, appId) {
+  return user.addApp(appId)
     .catch(e => e.name == new Sequelize.ForeignKeyConstraintError().name, function(err) {
       throw Errors.NotFoundError();
     })
-  }
 }
 
-module.exports = controller;
+exports.removeApp = function(user, appId) {
+  return user.removeApp(appId)
+  .catch(e => e.name == new Sequelize.ForeignKeyConstraintError().name, function(err) {
+      throw Errors.NotFoundError();
+    })
+}

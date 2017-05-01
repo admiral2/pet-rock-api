@@ -41,5 +41,18 @@ routerInstance.post('/apps', Auth.protectRoute, function(req, res, next) {
     })
 })
 
+routerInstance.del('/apps/:id', Auth.protectRoute, function(req, res, next) {
+  controller.removeApp(req.user, req.params['id'])
+  .then(function(apps) {
+    res.send(204);
+    next();
+  })
+  .catch(function(err) {
+    if (err.httpCode == 404) {
+        return next(new restify.NotFoundError(err.message));
+      }
+      next(new restify.InternalServerError(err));
+  })
+})
 
 module.exports = routerInstance;
