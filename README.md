@@ -13,6 +13,6 @@ $ npm install
 ```
 
 ## Usage
-1. Adjust `config/*.json` as nessesary to connect to PostgreSQL
+1. Adjust `config/*.json` as necessary to connect to PostgreSQL
 2. Run `npm start`
 3. See `docs/swagger.yaml` for API documentation
