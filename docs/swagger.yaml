@@ -1,0 +1,342 @@
+swagger: "2.0"
+info:
+  description: "This is a replacement for the Pebble API"
+  version: "0.0.1"
+  title: "Pet Rock Api"
+  contact:
+    email: "hello@michaelhumphris.com"
+host: "localhost:8090"
+basePath: "/"
+tags:
+- name: auth
+  description: Authentication
+- name: user
+  description: Operations performed on a user's account
+- name: app
+  description: Operations about apps
+- name: developer
+  description: Operations performed on a developer's account
+schemes:
+- http
+
+paths:
+  /auth/login:
+    post:
+      tags:
+      - auth
+      summary: Authenticates a user
+      description: Exchanges a user's username/password for a JWT to authenticate the user in subsequent requests
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          required:
+          - email
+          - password
+          properties:
+            email:
+              type: string
+              format: email
+              example: test@test.com
+            password:
+              type: string
+              example: test1234
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              auth_token:
+                type: string
+                format: jwt
+        401:
+          $ref: '#/responses/Unauthorized'
+  /user:
+    get:
+      tags:
+      - user
+      summary: Retrieves user information
+      security:
+      - AuthorizationHeader: []
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+  /user/apps:
+    get:
+      summary: Retrieves a list of apps added by the user
+      description: Retrieves a list of apps added by the user
+      tags:
+      - user
+      security:
+      - AuthorizationHeader: []
+      responses:
+        200:
+          description: The list of apps added by the user
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AppOverview'
+        401:
+          $ref: '#/responses/Unauthorized'
+        default:
+          $ref: '#/responses/UnknownError'
+    post:
+      summary: Adds an app to the user's account
+      description: Adds an app to the user's account. If successful, the record linking the app to the user will be returned. An empty array will be returned if the app has already been added.
+      tags:
+      - user
+      security:
+      - AuthorizationHeader: []
+      parameters:
+        - in: body
+          name: appid
+          schema:
+            type: object
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                format: uuid
+      responses:
+        201:
+          description: Successfully added app to user
+          schema:
+            type: object
+            properties:
+              AppId:
+                type: string
+                format: uuid
+              UserId:
+                type: string
+                format: uuid
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+        default:
+          $ref: '#/responses/UnknownError'
+  /user/apps/{id}:
+    delete:
+      summary: Deletes an app from the user's account
+      description: Deletes an app from the user's account
+      tags:
+      - user
+      security:
+      - AuthorizationHeader: []
+      parameters:
+      - name: id
+        in: path
+        description: Application ID
+        required: true
+        type: string
+        format: uuid
+      responses:
+        204:
+          description: Deleted
+        404:
+          $ref: '#/responses/NotFound'
+        401:
+          $ref: '#/responses/Unauthorized'
+        default:
+          $ref: '#/responses/UnknownError'
+
+  /apps:
+    get:
+      tags:
+      - app
+      summary: Retrieves all apps
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AppOverview'
+        default:
+          $ref: '#/responses/UnknownError'
+  /apps/{id}:
+    get:
+      tags:
+      - app
+      summary: Retrieves details for the specified app
+      description: Retrieves details for the specified app
+      parameters:
+      - name: id
+        in: path
+        description: App ID
+        required: true
+        type: string
+        format: uuid
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/AppDetail'
+        404:
+          $ref: '#/responses/NotFound'
+        default:
+          $ref: '#/responses/UnknownError'
+  /developer/{id}:
+    get:
+      tags:
+      - developer
+      summary: Retrieves details for the specified developer
+      description: Retrieves details for the specified developer
+      parameters:
+      - name: id
+        in: path
+        description: Developer ID
+        required: true
+        type: string
+        format: uuid
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DeveloperDetail'
+        404:
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          $ref: '#/responses/UnknownError'  
+  
+securityDefinitions:
+  AuthorizationHeader:
+    type: apiKey
+    in: header
+    name: Authorization
+    
+
+responses:
+  NotFound:
+    description: Not Found
+    schema:
+      $ref: '#/definitions/Error'
+  Unauthorized:
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/Error'
+  UnknownError:
+    description: Unknown Error
+    schema:
+      $ref: '#/definitions/Error'
+      
+definitions:
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+        example: NOT_FOUND
+      message:
+        type: string
+        example: The requested object could not be found
+  DeveloperDetail:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+      apps:
+        type: array
+        items:
+          $ref: '#/definitions/AppOverview'
+  AppOverview:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      title:
+        type: string
+      description:
+        type: string
+      hearts:
+        type: integer
+      screenshot_hardware:
+        type: string
+      list_image:
+        type: object
+      screenshot_images:
+        type: array
+  AppDetail:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      title:
+        type: string
+      description:
+        type: string
+      category_id:
+        type: string
+        format: uuid
+      category_name:
+        type: string
+      category_color:
+        type: string
+      hearts:
+        type: integer
+      screenshot_hardware:
+        type: string
+      companions:
+        type: object
+        properties:
+          ios:
+            type: string
+            format: url
+          android:
+            type: string
+            format: url
+      list_image:
+        type: object
+      screenshot_images:
+        type: array
+      source: 
+        type: string
+      website:
+        type: string
+      created_at:
+        type: string
+        format: date-time 
+      developer_id:
+        type: string
+        format: uuid
+      author:
+        type: string
+      releases:
+        type: array
+        items:
+          $ref: '#/definitions/AppRelease'
+  AppRelease:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      publish_date:
+        type: string
+        format: date-time
+      release_notes:
+        type: string
+      file:
+        type: string
+        format: url
+      sha256:
+        type: string
+      
