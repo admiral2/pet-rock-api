@@ -15,4 +15,5 @@ $ npm install
 ## Usage
 1. Adjust `config/*.json` as necessary to connect to PostgreSQL
 2. Run `npm start`
-3. See `docs/swagger.yaml` for API documentation
+3. Run `node seed` to seed the database with sample data
+4. See `docs/swagger.yaml` for API documentation
