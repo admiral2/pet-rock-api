@@ -19,6 +19,7 @@
     "body-parser": "^1.17.1",
     "config": "^1.25.1",
     "jwt-node": "^0.1.9",
+    "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-json": "^1.2.0",
     "passport-jwt": "^2.2.1",

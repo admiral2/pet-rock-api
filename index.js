@@ -2,6 +2,7 @@ var log = require('./util/logger');
 
 var restify = require('restify');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 
 var auth = require('./components/auth');
 
@@ -16,6 +17,8 @@ var server = restify.createServer({
 
 restify.CORS.ALLOW_HEADERS.push("authorization");
 restify.CORS.ALLOW_HEADERS.push("content-type");
+
+server.use(morgan('dev'));
 
 server.use(restify.CORS());
 server.use(restify.fullResponse());
