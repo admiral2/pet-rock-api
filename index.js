@@ -1,3 +1,5 @@
+var log = require('./util/logger');
+
 var restify = require('restify');
 var bodyParser = require('body-parser');
 
@@ -8,7 +10,9 @@ var authRouter = require('./components/auth/auth.router');
 var userRouter = require('./components/user/user.router');
 var storeRouter = require('./components/store/store.router');
 
-var server = restify.createServer();
+var server = restify.createServer({
+  name: 'Pet Rock API'
+});
 
 restify.CORS.ALLOW_HEADERS.push("authorization");
 restify.CORS.ALLOW_HEADERS.push("content-type");
@@ -26,5 +30,5 @@ configurationRouter.applyRoutes(server, '/api/config');
 storeRouter.applyRoutes(server, '/');
 
 server.listen(8090, function() {
-  console.log('%s listening at %s', server.name, server.url);
+  log.info('%s listening at %s', server.name, server.url)
 });

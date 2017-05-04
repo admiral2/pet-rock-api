@@ -2,7 +2,7 @@
   "name": "pet-rock-api",
   "version": "0.0.1",
   "description": "3rd Party API for Pebble",
-  "author": "Michael Humphris (michahump@gmail.com)",  
+  "author": "Michael Humphris (michahump@gmail.com)",
   "license": "AGPL-1.0",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,7 @@
     "pg-hstore": "^2.3.2",
     "restify": "^4.3.0",
     "restify-router": "^0.4.2",
-    "sequelize": "^3.30.4"
+    "sequelize": "^3.30.4",
+    "winston": "^2.3.1"
   }
 }
