@@ -27,6 +27,7 @@
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "restify": "^4.3.0",
+    "restify-errors": "^4.3.0",
     "restify-router": "^0.4.2",
     "sequelize": "^3.30.4",
     "winston": "^2.3.1"

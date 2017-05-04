@@ -1,7 +1,8 @@
 var restify = require('restify');
+var errors = require('restify-errors');
+var errorHandler = require('../../util/error_handler');
 var Router = require('restify-router').Router;
 var routerInstance = new Router();
-var Errors = require('../../util/errors');
 
 var controller = require('./store.controller');
 
@@ -12,7 +13,7 @@ routerInstance.get('/', function(req, res, next) {
     res.end(result);
     next();
   }).catch(function(err) {
-    next(new restify.InternalServerError(err));
+    next(err);
   });
 });
 
@@ -23,7 +24,7 @@ routerInstance.get('/', function(req, res, next) {
 
 // Returns details about the given category
 routerInstance.get('/category/:id', function(req, res, next) {
-  next(new restify.NotFoundError());
+  errorHandler.handle(new errors.NotFoundError(), next);
 });
 
 // Returns all apps
@@ -33,7 +34,7 @@ routerInstance.get('/apps', function(req, res, next) {
       res.json(result)
       next();
     }).catch(function(err) {
-      next(new restify.InternalServerError(err));
+      errorHandler.handle(err, next);
     })
 });
 
@@ -45,10 +46,7 @@ routerInstance.get('/apps/:id', function(req, res, next) {
       res.json(result)
       next();
     }).catch(function(err) {
-      if (err.httpCode == 404) {
-        return next(new restify.NotFoundError(err.message));
-      }
-      next(new restify.InternalServerError(err));
+      errorHandler.handle(err, next);
     })
 });
 
@@ -60,7 +58,7 @@ routerInstance.get('/developer/:id', function(req, res, next) {
       res.json(result)
       next();
     }).catch(function(err) {
-      next(new restify.InternalServerError(err));
+      errorHandler.handle(err, next);
     })
 });
 
@@ -80,7 +78,7 @@ routerInstance.get('/home/faces', function(req, res, next) {
       res.json(result);
       next();
     }).catch(function(err) {
-      next(new restify.InternalServerError(err));
+      errorHandler.handle(err, next);
     })
 
 });

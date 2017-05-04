@@ -1,7 +1,7 @@
 var restify = require('restify');
 var Router = require('restify-router').Router;
 var routerInstance = new Router();
-var Errors = require('../../util/errors');
+var errorHandler = require('../../util/error_handler');
 
 var Auth = require('../auth');
 
@@ -22,7 +22,7 @@ routerInstance.get('/apps', Auth.protectRoute, function(req, res, next) {
       if (err.httpCode == 404) {
         return next(new restify.NotFoundError(err.message));
       }
-      next(new restify.InternalServerError(err));
+      errorHandler.handle(err, next);
     })
 })
 
@@ -37,7 +37,7 @@ routerInstance.post('/apps', Auth.protectRoute, function(req, res, next) {
       if (err.httpCode == 404) {
         return next(new restify.NotFoundError(err.message));
       }
-      next(new restify.InternalServerError(err));
+      errorHandler.handle(err, next);
     })
 })
 
@@ -51,7 +51,7 @@ routerInstance.del('/apps/:id', Auth.protectRoute, function(req, res, next) {
     if (err.httpCode == 404) {
         return next(new restify.NotFoundError(err.message));
       }
-      next(new restify.InternalServerError(err));
+      errorHandler.handle(err, next);
   })
 })
 

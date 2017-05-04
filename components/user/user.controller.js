@@ -2,7 +2,8 @@ var Promise = require('bluebird');
 var config = require('config');
 var Sequelize = require('Sequelize');
 
-var Errors = require('../../util/errors');
+// var Errors = require('../../util/errors');
+var errors = require('restify-errors');
 
 var App = require('../../models').App;
 var Image = require('../../models').Image;
@@ -21,13 +22,13 @@ exports.getApps = function(user) {
 exports.addApp = function(user, appId) {
   return user.addApp(appId)
     .catch(e => e.name == new Sequelize.ForeignKeyConstraintError().name, function(err) {
-      throw Errors.NotFoundError();
+      throw new errors.NotFoundError();
     })
 }
 
 exports.removeApp = function(user, appId) {
   return user.removeApp(appId)
   .catch(e => e.name == new Sequelize.ForeignKeyConstraintError().name, function(err) {
-      throw Errors.NotFoundError();
+      throw new errors.NotFoundError();
     })
 }

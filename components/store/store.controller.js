@@ -1,7 +1,7 @@
 var Promise = require('bluebird');
 var config = require('config');
 
-var Errors = require('../../util/errors');
+var errors = require('restify-errors');
 
 var App = require('../../models').App;
 var Image = require('../../models').Image;
@@ -48,7 +48,7 @@ exports.getAppById = function(id) {
       ],
     }).then(function(app) {
       if (app == null) {
-        throw new Errors.NotFoundError();
+        throw new errors.NotFoundError();
       }
       return app;
     }).then(AppMapper.toDetailView);
@@ -61,7 +61,7 @@ exports.getAppsByDeveloper = function(developerId) {
       ],
     }).then(function(developer) {
       if (developer == null) {
-        throw new Errors.NotFoundError();
+        throw new errors.NotFoundError();
       }
       return developer;
     }).then(DeveloperMapper.toDeveloperOverview);
